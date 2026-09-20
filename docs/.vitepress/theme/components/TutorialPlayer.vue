@@ -57,9 +57,9 @@ const nextChapterUrl = computed(() => {
 
 const teachList = computed(() => frontmatter.value?.teach || currentChapterObj.value?.teach || [])
 
-// Optional per-chapter mini-map: { x, y } mark the "you are here" room as a
-// percentage of the map image; { zoom, fx, fy } optionally crop/zoom to focus
-// the village; { arrow } shows a move direction. Driven from chapter frontmatter.
+// Optional per-chapter mini-map from chapter frontmatter: { img, label }.
+// The "you are here" marker is baked into each map screenshot, so the template
+// only needs the image and a caption — no runtime pin/crop/arrow.
 const chapterMap = computed(() => frontmatter.value?.map || currentChapterObj.value?.map || null)
 
 // Multi-step in-chapter practice steps
@@ -811,34 +811,6 @@ onUnmounted(() => {
   height: auto;
   image-rendering: pixelated;
 }
-.tut-map-pin {
-  position: absolute;
-  box-sizing: border-box;
-  width: var(--pin-size, 6.5%);
-  aspect-ratio: 1 / 1;
-  transform: translate(-50%, -50%);
-  border: 2px solid #e42d1d;
-  border-radius: 2px;
-  background: transparent;
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.45), 0 0 8px rgba(228,45,29,0.7);
-  animation: tut-pin-pulse 1.4s ease-in-out infinite;
-  z-index: 2;
-  pointer-events: none;
-}
-@keyframes tut-pin-pulse {
-  0%, 100% { border-color: #e42d1d; box-shadow: 0 0 0 1px rgba(0,0,0,0.45), 0 0 6px rgba(228,45,29,0.55); }
-  50% { border-color: #ff5138; box-shadow: 0 0 0 1px rgba(0,0,0,0.45), 0 0 15px rgba(255,60,40,0.95); }
-}
-.tut-map-arrow {
-  position: absolute;
-  left: 50%; top: 50%;
-  width: 0; height: 0;
-  border: 8px solid transparent;
-}
-.tut-map-arrow.a-north { border-bottom-color: #f4dd94; transform: translate(-50%, -140%); }
-.tut-map-arrow.a-south { border-top-color: #f4dd94; transform: translate(-50%, 40%); }
-.tut-map-arrow.a-east  { border-left-color: #f4dd94; transform: translate(40%, -50%); }
-.tut-map-arrow.a-west  { border-right-color: #f4dd94; transform: translate(-140%, -50%); }
 .tut-map figcaption {
   margin-top: 6px;
   font-size: 12.5px;
