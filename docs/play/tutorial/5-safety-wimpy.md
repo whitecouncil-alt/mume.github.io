@@ -1,11 +1,11 @@
 ---
-title: "Combat Safety Setup & Wimpy"
-description: "Configure automatic emergency flee thresholds and reduce screen text velocity."
+title: "Setting up for combat"
+description: "Configure an automatic flee threshold when your hit points reduce to a certain level, and reduce the amount of on-screen text."
 teach:
   - command: "change wimpy 15"
-    desc: "set automatic flee HP safety threshold"
+    desc: "set an automatic flee HP safety threshold - you flee the fight if your hit points fall below this number"
   - command: "change spam all"
-    desc: "enable NoSpam mode to filter unnecessary text velocity"
+    desc: "reduce the amount of text on the screen (type change spam to see individual elements you can alter)"
 steps:
   - ask: "change wimpy 15"
     note: "Set your automatic auto-flee safety threshold to 15 HP using `change wimpy 15`."
@@ -44,8 +44,6 @@ responses:
     *+->
 ---
 
-# Chapter 4: Steeling Combat Reflexes
+# Prepare for your life as a Warrior
 
-Fuor knows that the hills beyond the village gates harbor dangerous beasts and outlaw bands. Before venturing forth, he must configure his survival instincts—setting `change wimpy 15` ensures Fuor automatically flees if injured below 15 HP, while `change spam all` clarifies fast-moving combat text.
-
-Steel Fuor's reflexes by typing `change wimpy 15` followed by `change spam all` below!
+The hills beyond the village gates harbour dangerous beasts and outlaw bands. Before venturing forth, Fuor configures his survival instincts - `change wimpy 15` makes him automatically flee if injured below 15 HP, and `change spam all` tidies fast-moving combat text.

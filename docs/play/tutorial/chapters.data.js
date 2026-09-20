@@ -23,7 +23,8 @@ export default createContentLoader('play/tutorial/*.md', {
           accept: page.frontmatter.accept || [],
           hint: page.frontmatter.hint || null,
           example: page.frontmatter.example || null,
-          responses: page.frontmatter.responses || {}
+          responses: page.frontmatter.responses || {},
+          map: page.frontmatter.map || null
         }
       })
       .sort((a, b) => a.chapterNum - b.chapterNum)

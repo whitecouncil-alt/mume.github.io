@@ -1,6 +1,9 @@
 ---
-title: "Examining & Containers"
+title: "Examining items"
 description: "Inspect specific objects in detail and practice putting items in or retrieving them from bags."
+map:
+  img: /assets/images/tutorial-maps/beer-garden.jpg
+  label: "The Foaming Mug's Beer Garden"
 teach:
   - command: "examine table"
     desc: "inspect a specific object in detail"
@@ -57,7 +60,7 @@ responses:
     !.*>
 ---
 
-# Chapter 3: Unpacking the Travel Sack
+# Managing your Items
 
 Sitting at a simple oaken table in the beer garden, Fuor prepares his supplies for the road ahead. Detailed inspection uses `examine`, while pack organization follows `get <item> <container>` and `put <item> <container>`.
 

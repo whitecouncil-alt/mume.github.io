@@ -1,15 +1,18 @@
 ---
 title: "Shopping & Trading"
-description: "Browse shop inventory, buy travel rations, and give items to townspeople."
+description: "Browse a shop, buy provisions for your travels, and give items to players or NPCs."
+map:
+  img: /assets/images/tutorial-maps/travellers-shop.jpg
+  label: "Cluttered Traveller's Shop"
 teach:
   - command: "south"
     desc: "head south into the Cluttered Traveller's Shop"
   - command: "list"
     desc: "browse the shopkeeper's available stock and prices"
   - command: "buy bread"
-    desc: "purchase travel rations"
+    desc: "buy travel rations"
   - command: "give bread maelton"
-    desc: "give an item to another character (item name comes first)"
+    desc: "give an item (item name comes first)"
 steps:
   - ask: "south"
     note: "Head `south` from Market Square into the Cluttered Traveller's Shop."
@@ -17,7 +20,7 @@ steps:
       - "south"
       - "s"
     hint: "Type: south (or s)"
-  - story: "Bells jingle as Ermin and Fuor enter the shop, surrounded by dusty boxes of dried fruit and fresh baked bread."
+  - story: "Bells jingle as Irelm and Fuor enter the shop, surrounded by dusty boxes of dried fruit and fresh baked bread."
   - ask: "list"
     note: "Type `list` to browse the grocer's wares and prices."
     accept:
@@ -72,8 +75,6 @@ responses:
     !+*>
 ---
 
-# Chapter 9: Provisioning the Expedition
+# Provisioning for your Adventures
 
-Guided by Ermin, Fuor visits the Cluttered Traveller's Shop to buy food for their journey into the hills. Merchant interaction uses `list` to inspect stock and `buy <item>` to make purchases. To share items, MUME syntax uses `give <item> <person>`.
-
-Help Fuor enter the shop (`south`), inspect the grocer's wares (`list`), buy travel rations (`buy bread`), and offer a loaf to Elder Maelton (`give bread maelton`) below!
+Irelm takes Fuor to the **Cluttered Traveller's Shop** for food. Use `list` to see the stock, `buy <item>` to purchase, and `give <item> <person>` to hand something over (item name first).

@@ -1,11 +1,14 @@
 ---
-title: "Emergency Fleeing"
+title: "Fleeing from fights"
 description: "Master emergency tactical retreats to disengage from dangerous combat."
+map:
+  img: /assets/images/tutorial-maps/tower-hills.jpg
+  label: "Tower Hills"
 teach:
   - command: "flee"
     desc: "immediately disengage and run away through a random exit"
 steps:
-  - story: "The timber wolf growls fiercely, snapping its jaws near Fuor's arm! Ermin shouts, 'Disengage! Flee back to the path!'"
+  - story: "The slithering snake growls fiercely, snapping its jaws near Fuor's arm! Irelm shouts, 'Disengage! Flee back to the path!'"
   - ask: "flee"
     note: "When a fight turns deadly, type `flee` (or `f`) to break combat immediately!"
     accept:
@@ -35,8 +38,8 @@ responses:
     *+->
 ---
 
-# Chapter 11: Tactical Retreat
+# Tactical Retreat
 
-The wolf snaps viciously, grazing Fuor's arm! Ermin shouts that knowing when to retreat is a true warrior's wisdom—`flee` instantly breaks engagement and escapes through an available exit.
+The snake snaps viciously, grazing Fuor's arm! Irelm shouts that knowing when to retreat is a true warrior's wisdom-`flee` instantly breaks engagement and escapes through an available exit.
 
 Help Fuor execute a swift emergency retreat back toward the village by typing `flee` below!

@@ -1,6 +1,6 @@
 ---
-title: "Hero's Graduation & Web Client"
-description: "Familiarize yourself with the MUME Web Client, live mapper, and community Rangers."
+title: "Off to Middle-earth"
+description: "You are ready to play for real - time to log into the web client and begin your adventure."
 teach:
   - command: "look"
     desc: "inspect your surroundings and client layout"
@@ -30,24 +30,13 @@ steps:
       - "who"
     hint: "Type: who ranger"
 responses:
-  look: "The Foaming Mug's Beer Garden\nA quiet courtyard paved with cobblestones lies behind the tavern.\nExits: north, east.\nRanger Ermin smiles warmly at you.\n\n*+->"
+  look: "The Foaming Mug's Beer Garden\nA quiet courtyard paved with cobblestones lies behind the tavern.\nExits: south, west.\nRanger Irelm smiles warmly at you.\n\n*+->"
   map: "    #   .   .\n    |   |   |\n  .-*---*---*-.\n    |   |   |\n    #   .   .\n\n*+->"
   who ranger: "Rangers\n-------\n\n0 such allies or visible Ainur on.\n\n*+->"
   who rangers: "Rangers\n-------\n\n0 such allies or visible Ainur on.\n\n*+->"
   who: "Players Online: Fuor, Martyrson, Elrond, Glorfindel.\n\n*+->"
 ---
 
-# Chapter 15: Hero's Graduation
+# Off to Middle-Earth
 
-Congratulations on guiding Fuor through the Black Hills walkthrough! You have mastered navigation, combat reflexes, equipment, trading, and resting.
-
-### Web Client & MMapper Preview
-
-When you launch into MUME using the Web Client, you'll see an integrated live mapper (**MMapper**) and character stats panel:
-
-<div style="display: flex; gap: 12px; margin: 12px 0; flex-wrap: wrap;">
-  <img src="/assets/images/tutorial-desc.png" alt="Web Client Interface" style="max-width: 48%; border-radius: 6px; border: 1px solid rgba(215,166,63,0.3);" />
-  <img src="/assets/images/tutorial-map.png" alt="MMapper Live Map" style="max-width: 48%; border-radius: 6px; border: 1px solid rgba(215,166,63,0.3);" />
-</div>
-
-Follow the interactive quest prompts below to complete your graduation!
+That's the basics - you've learned to look, move, examine, gear up, talk, trade, fight, flee, rest, train and rent. When you play for real you'll do it all in the **web client**, with a live map (MMapper) beside the text. You'll start your adventures with **Gandalf** before you find yourself back in Tower Hills, where your life in MUME will begin. Remember - Rangers (who are actual characters) are online to help new players; use `who ranger` to see who is online.

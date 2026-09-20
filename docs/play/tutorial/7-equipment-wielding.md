@@ -1,5 +1,5 @@
 ---
-title: "Equipment & Wielding"
+title: "Equipment & Weapons"
 description: "Inspect carried items, equip body armor, wield primary weapons, and fasten shields."
 teach:
   - command: "equipment"
@@ -127,8 +127,8 @@ responses:
     *+->
 ---
 
-# Chapter 6: Arming for the Road
+# Arming for the Road
 
-Carrying armor and weapons in a pack offers no protection—Fuor must don his jerkin (`wear jerkin`), grip his backsword (`wield backsword`), and fasten his wooden shield (`wear shield`).
+Carrying armor and weapons in a pack offers no protection-Fuor must don his jerkin (`wear jerkin`), hold his backsword (`wield backsword`), and fasten his wooden shield (`wear shield`).
 
 Arm Fuor for the road ahead by inspecting his `equipment` and `inventory`, then donning his gear below!

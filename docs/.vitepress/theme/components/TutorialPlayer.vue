@@ -57,6 +57,11 @@ const nextChapterUrl = computed(() => {
 
 const teachList = computed(() => frontmatter.value?.teach || currentChapterObj.value?.teach || [])
 
+// Optional per-chapter mini-map: { x, y } mark the "you are here" room as a
+// percentage of the map image; { zoom, fx, fy } optionally crop/zoom to focus
+// the village; { arrow } shows a move direction. Driven from chapter frontmatter.
+const chapterMap = computed(() => frontmatter.value?.map || currentChapterObj.value?.map || null)
+
 // Multi-step in-chapter practice steps
 const stepsList = computed(() => {
   const rawSteps = frontmatter.value?.steps || currentChapterObj.value?.steps
@@ -207,6 +212,16 @@ function renderStepLog() {
   })
 
   log.value = newLog
+
+  // A reading-only chapter (no interactive steps, e.g. the "What is MUME?"
+  // intro) finishes straight away and offers a Continue button — no command
+  // to type. It must START and STAY at the top so the reader can scroll down
+  // through the narrative at their own pace, so we skip the bottom-scroll.
+  if (stepsList.value.length === 0) {
+    completeChapter(true)
+    return
+  }
+
   scrollLog()
 
   if (currentSubStep.value && !currentSubStep.value.ask && (currentSubStep.value.text || currentSubStep.value.response)) {
@@ -223,15 +238,31 @@ function renderStepLog() {
   }
 }
 
-function completeChapter() {
+function completeChapter(isIntro = false) {
   finished.value = true
   log.value.push({
     kind: 'chapter_complete',
+    isIntro,
     chapterNum: chapterNum.value,
     title: chapterTitle.value,
     nextUrl: nextChapterUrl.value
   })
-  scrollLog()
+  // Reading-only intro chapters stay pinned at the top; everything else
+  // follows the log down to the freshly-revealed block.
+  if (isIntro) {
+    scrollTop()
+  } else {
+    scrollLog()
+  }
+}
+
+function scrollTop() {
+  if (typeof window !== 'undefined') {
+    setTimeout(() => {
+      const container = logEl.value
+      if (container) container.scrollTo({ top: 0, behavior: 'auto' })
+    }, 60)
+  }
 }
 
 function advanceNext() {
@@ -353,7 +384,8 @@ watch(() => route.path, () => {
 }, { immediate: true })
 
 onMounted(() => {
-  renderStepLog()
+  // renderStepLog() is already driven by the immediate route watcher above;
+  // calling it again here double-fired the render (visible on step-free chapters).
   if (typeof window !== 'undefined') {
     // Auto-open Command Sheet on desktop viewports by default
     if (window.innerWidth >= 1024) {
@@ -436,6 +468,15 @@ onUnmounted(() => {
                   <div class="tut-eyebrow">CHAPTER {{ b.chapterNum }} OF {{ totalChapters }}</div>
                   <h3 class="tut-h">{{ b.title }}</h3>
 
+                  <!-- Mini-map: a centred crop of the real MMapper map, with the
+                       current room marked. The red marker is baked into the image. -->
+                  <figure v-if="chapterMap && chapterMap.img" class="tut-map">
+                    <div class="tut-map-frame">
+                      <img :src="withBase(chapterMap.img)" :alt="'Map showing ' + (chapterMap.label || 'your location')" />
+                    </div>
+                    <figcaption v-if="chapterMap.label">You are here — {{ chapterMap.label }}</figcaption>
+                  </figure>
+
                   <!-- Render markdown lesson content -->
                   <div class="tut-md-content">
                     <slot />
@@ -483,14 +524,15 @@ onUnmounted(() => {
 
               <template v-else-if="b.kind === 'chapter_complete'">
                 <div class="tut-complete-box">
-                  <div class="tut-eyebrow">Chapter {{ b.chapterNum }} Complete!</div>
-                  <h3 class="tut-h">Great work mastering {{ b.title }}</h3>
-                  <p class="tut-line" v-if="b.nextUrl">Ready to continue your journey into Middle-earth?</p>
+                  <div class="tut-eyebrow">{{ b.isIntro ? 'Ready?' : 'Chapter ' + b.chapterNum + ' Complete!' }}</div>
+                  <h3 class="tut-h">{{ b.isIntro ? 'Your first hour begins' : 'Great work mastering ' + b.title }}</h3>
+                  <p class="tut-line" v-if="b.nextUrl">{{ b.isIntro ? 'Next you will create a practice character and wake up in Middle-earth.' : 'Ready to continue your journey into Middle-earth?' }}</p>
                   <p class="tut-line" v-else>You have completed all chapters in the interactive tutorial!</p>
 
                   <div class="tut-end-actions">
                     <button v-if="b.nextUrl && nextChapterObj" type="button" class="tut-enter" @click="navigateToUrl(b.nextUrl)">
-                      Continue to Chapter {{ nextChapterObj.chapterNum }}: {{ nextChapterObj.title }} &rarr;
+                      <template v-if="b.isIntro">Begin the tutorial &rarr;</template>
+                      <template v-else>Continue to Chapter {{ nextChapterObj.chapterNum }}: {{ nextChapterObj.title }} &rarr;</template>
                     </button>
                     <button v-else type="button" class="tut-enter" @click="openModal">
                       Tutorial Complete &mdash; What's Next? &rarr;
@@ -751,6 +793,58 @@ onUnmounted(() => {
   padding: 18px 20px 14px;
   margin: 8px 0 16px;
   box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* ---- Mini-map (you-are-here) ---- */
+.tut-map { margin: 4px auto 16px; max-width: 460px; }
+.tut-map-frame {
+  position: relative;
+  line-height: 0;
+  overflow: hidden;
+  border: 1px solid rgba(215, 166, 63, 0.4);
+  border-radius: 8px;
+  background: #1a1a1a;
+}
+.tut-map-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+}
+.tut-map-pin {
+  position: absolute;
+  box-sizing: border-box;
+  width: var(--pin-size, 6.5%);
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border: 2px solid #e42d1d;
+  border-radius: 2px;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.45), 0 0 8px rgba(228,45,29,0.7);
+  animation: tut-pin-pulse 1.4s ease-in-out infinite;
+  z-index: 2;
+  pointer-events: none;
+}
+@keyframes tut-pin-pulse {
+  0%, 100% { border-color: #e42d1d; box-shadow: 0 0 0 1px rgba(0,0,0,0.45), 0 0 6px rgba(228,45,29,0.55); }
+  50% { border-color: #ff5138; box-shadow: 0 0 0 1px rgba(0,0,0,0.45), 0 0 15px rgba(255,60,40,0.95); }
+}
+.tut-map-arrow {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 0; height: 0;
+  border: 8px solid transparent;
+}
+.tut-map-arrow.a-north { border-bottom-color: #f4dd94; transform: translate(-50%, -140%); }
+.tut-map-arrow.a-south { border-top-color: #f4dd94; transform: translate(-50%, 40%); }
+.tut-map-arrow.a-east  { border-left-color: #f4dd94; transform: translate(40%, -50%); }
+.tut-map-arrow.a-west  { border-right-color: #f4dd94; transform: translate(-140%, -50%); }
+.tut-map figcaption {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: #b8a97e;
+  text-align: center;
+  font-style: italic;
 }
 
 .tut-card-badge {

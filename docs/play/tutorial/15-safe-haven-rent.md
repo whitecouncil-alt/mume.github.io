@@ -1,6 +1,9 @@
 ---
-title: "Safe Haven & Inn Renting"
-description: "Locate the innkeeper in The Foaming Mug, request a storage quote, and safely rent to preserve your equipment."
+title: "Renting: Saving Your Character and their Equipment"
+description: "Rent a room at an inn to store your gear and save your character."
+map:
+  img: /assets/images/tutorial-maps/rent.jpg
+  label: "Inn's Private Rooms"
 teach:
   - command: "up"
     desc: "ascend to the Inn's Private Rooms"
@@ -81,8 +84,6 @@ responses:
     ![>
 ---
 
-# Chapter 14: Securing the Night at the Inn
+# Securing the Night at the Inn
 
-As twilight falls over the Black Hills, Ermin commends Fuor on a successful first expedition. Simply disconnecting in the wild causes adventurers to drop their equipment! To save your gear and character permanently, head upstairs in **The Foaming Mug**, inspect the innkeeper (`examine innkeeper`), check room rates (`offer`), and rent a private chamber (`rent`).
-
-Help Fuor secure his room by typing `up`, `examine innkeeper`, `offer`, and `rent` below!
+Simply disconnecting in the wild drops your equipment. **To save your equipment and character**, head `up` to the **Inn's Private Rooms**, `examine innkeeper`, ask the rate with `offer`, then `rent`. There are many inns around Middle-earth - look for the "R" on the map. Remember: always `rent` at the end of a session!
